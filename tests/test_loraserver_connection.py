@@ -10,7 +10,7 @@ class TestLoRaServerConnection:
         requests_mock.post(
                 "https://loraserver/api/internal/login",
                 json={
-                     "jwt": "eyJhbGciOiZXJ2ZXIiLCJleHAiOjE1NTU1OTk1ODMsImlzcyI6ImxvcmEtYXBwLXNlcnZlciIsIm5iZiI6MTU1NTUxMzE4Mywic3ViIjoidXNlciIsInVzZXJuYW1lIjoiYXBpYWNjb3VudCJ9.MBkIe1pxh51lB4-qRkjxlMaOa2HBnMhwk148wYrBDj0JIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJsb3JhLWFwcC1z"
+                    "jwt": "eyJhbGciOiZXJ2ZXIiLCJleHAiOjE1NTU1OTk1ODMsImlzcyI6ImxvcmEtYXBwLXNlcnZlciIsIm5iZiI6MTU1NTUxMzE4Mywic3ViIjoidXNlciIsInVzZXJuYW1lIjoiYXBpYWNjb3VudCJ9.MBkIe1pxh51lB4-qRkjxlMaOa2HBnMhwk148wYrBDj0JIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJsb3JhLWFwcC1z"  # noqa: E501
 }
                 )
         # Mock the device list
@@ -24,7 +24,7 @@ class TestLoRaServerConnection:
                           "name": "asdf",
                           "applicationID": "7",
                           "description": "asdf",
-                          "deviceProfileID": "54767cb5-ba1b-494e-beef-8821ddd69bcb",
+                          "deviceProfileID": "54767cb5-ba1b-494e-beef-8821ddd69bcb",  # noqa: E501
                           "deviceProfileName": "ODN_EU_02",
                           "deviceStatusBattery": 255,
                           "deviceStatusMargin": 256,
@@ -44,7 +44,9 @@ class TestLoRaServerConnection:
                 )
 
     def test_connection_setup(self, lora_connection):
-        lora_connection.connection.get('https://loraserver/api/devices?limit=10&applicationID=1')
+        lora_connection.connection.get(
+                'https://loraserver/api/devices?limit=10&applicationID=1'
+                )
 
     def test_connection_setup_with_device_list(self, lora_connection):
         devices = device.Devices(loraserver_connection=lora_connection)
