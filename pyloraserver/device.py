@@ -1,7 +1,4 @@
 # Interacting with the LoraServer API to manage devices
-import requests
-
-
 class Devices:
 
     def __init__(self,
