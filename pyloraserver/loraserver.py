@@ -1,6 +1,5 @@
 import logging
 import requests
-import json
 
 logger = logging.getLogger('pyloraserver.loraserver')
 
