@@ -10,8 +10,8 @@ class TestDevicesValidation(object):
         from pyloraserver import device
         return device.Devices(
                 deveui='deadbeefdeadbeef',
-                appkey='deadbeefdeadbeefdeadbeefdeadbeef',
-                nwkkey='00000000000000000000000000000000'
+                nwkkey='deadbeefdeadbeefdeadbeefdeadbeef',
+                appkey='00000000000000000000000000000000'
                 )
 
     # Devices has valid EUI/AppKey
@@ -19,33 +19,33 @@ class TestDevicesValidation(object):
         assert lora_correct_device.deveui == 'deadbeefdeadbeef'
 
     def test_device_returns_correct_appkey(self, lora_correct_device):
-        assert lora_correct_device.appKey == 'deadbeefdeadbeefdeadbeefdeadbeef'
+        assert lora_correct_device.nwkKey == 'deadbeefdeadbeefdeadbeefdeadbeef'
 
     def test_device_returns_correct_nwkkey(self, lora_correct_device):
-        assert lora_correct_device.nwkKey == '00000000000000000000000000000000'
+        assert lora_correct_device.appKey == '00000000000000000000000000000000'
 
     def test_device_refuses_invalid_eui_length(self):
         with pytest.raises(Exception):
             device.Devices(
                 deveui='dead',
-                appkey='deadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeef',  # noqa: E501
-                nwkkey='00000000000000000000000000000000'
+                nwkkey='deadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeef',  # noqa: E501
+                appkey='00000000000000000000000000000000'
             )
 
     def test_device_refuses_invalid_appKey_length(self):
         with pytest.raises(Exception):
             device.Devices(
                     deveui='dead',
-                    appkey='deadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefdeadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeef',  # noqa: E501
-                    nwkkey='00000000000000000000000000000000'
+                    nwkkey='deadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefdeadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeef',  # noqa: E501
+                    appkey='00000000000000000000000000000000'
                     )
 
     def test_device_refuses_invalid_nwkKey_value(self):
         with pytest.raises(Exception):
             device.Devices(
                     deveui='dead',
-                    appkey='deadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeef',  # noqa: E501
-                    nwkkey='12345678901112131415161718192021'
+                    nwkkey='deadbeefddddddddeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeefeadbeef',  # noqa: E501
+                    appkey='12345678901112131415161718192021'
             )
 
     # Devices has valid EUI but invalid AppKey
