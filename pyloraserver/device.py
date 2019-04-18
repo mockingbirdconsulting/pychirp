@@ -134,7 +134,9 @@ class Devices:
                 )
         else:
             return_dict['result'] = "failure"
-            return_dict['message'] = json.loads(create_device.content)['message']
+            return_dict['message'] = json.loads(
+                    create_device.content
+                    )['message']
         return return_dict
 
     def list_all(self,
