@@ -108,7 +108,6 @@ class Devices:
                   }
                 }
 
-            print(keys_payload)
             set_keys = self.lscx.connection.post(
                 self.lscx.loraserver_url+"/api/devices/"+self.deveui+"/keys",
                 json=keys_payload
@@ -118,12 +117,12 @@ class Devices:
                 printable_dev_eui = ', '.join(
                         hex(i) for i in binascii.unhexlify(self.deveui)
                         )
-                printable_app_key = ', '.join(
-                        hex(i) for i in binascii.unhexlify(self.appKey)
+                printable_nwk_key = ', '.join(
+                        hex(i) for i in binascii.unhexlify(self.nwkKey)
                         )
                 return_dict['result'] = "success"
                 return_dict['printable_dev_eui'] = printable_dev_eui
-                return_dict['printable_app_key'] = printable_app_key
+                return_dict['printable_nwk_key'] = printable_nwk_key
             else:
                 return_dict['result'] = ['failure']
                 return_dict['message'] = "Error: %s" % json.loads(
