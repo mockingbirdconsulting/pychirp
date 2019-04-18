@@ -24,7 +24,7 @@ pipeline {
                 }
             }
             steps {
-                sh  python setup.py bdist_wheel  
+                sh  'python setup.py bdist_wheel  '
             }
             post {
                 always {
