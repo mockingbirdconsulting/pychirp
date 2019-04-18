@@ -1,5 +1,3 @@
-import json 
-
 class DeviceProfiles:
 
     def __init__(self,
