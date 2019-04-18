@@ -25,7 +25,7 @@ class Devices:
         self.referenceAltitude = referenceAltitude
         self.skipFCntCheck = skipFCntCheck
         self.deveui = deveui
-        self.appKey = appkey
+        self.appKey = '00000000000000000000000000000000'
         self.nwkKey = nwkkey
         self.lscx = loraserver_connection
         self.validate()
@@ -57,6 +57,10 @@ class Devices:
     def create_and_activate(self):
         return_dict = {'result': 'success'}
         # Verify that we have all the information that we need
+        if self.deveui is None:
+            return_dict['result'] = 'failure'
+            return_dict['message'] = "DevEUI was not provided"
+
         if self.appid is None:
             return_dict['result'] = 'failure'
             return_dict['message'] = "Application ID was not provided"
@@ -94,8 +98,8 @@ class Devices:
             )
 
         if create_device.status_code == 200:
-            if self.appKey is None:
-                self.appKey = uuid.uuid4().hex
+            if self.nwkKey is None:
+                self.nwkKey = uuid.uuid4().hex
             keys_payload = {
                   "deviceKeys": {
                     "nwkKey": self.nwkKey,
@@ -104,6 +108,7 @@ class Devices:
                   }
                 }
 
+            print(keys_payload)
             set_keys = self.lscx.connection.post(
                 self.lscx.loraserver_url+"/api/devices/"+self.deveui+"/keys",
                 json=keys_payload
@@ -127,6 +132,9 @@ class Devices:
                 self.lscx.connection.delete(
                     self.lscx.loraserver_url+"/api/devices/"+self.deveui,
                 )
+        else:
+            return_dict['result'] = "failure"
+            return_dict['message'] = json.loads(create_device.content)['message']
         return return_dict
 
     def list_all(self,
