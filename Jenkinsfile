@@ -43,6 +43,7 @@ pipeline {
                 label "pytest"
                 }
             steps {
+                sh 'pip3 install -r dev_requirements.txt' 
                 sh "python3 -m twine upload dist/*"
             }
         }
