@@ -18,6 +18,9 @@ pipeline {
             }
         }
         stage('Build package') {
+            agent {
+                label "pytest"
+                }
             when {
                 expression {
                     currentBuild.result == null || currentBuild.result == 'SUCCESS'
@@ -36,6 +39,9 @@ pipeline {
             }
         }
         stage("Deploy to PyPI") {
+            agent {
+                label "pytest"
+                }
             steps {
                 sh "twine upload dist/*"
             }
