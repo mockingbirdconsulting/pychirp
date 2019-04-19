@@ -27,7 +27,7 @@ pipeline {
                 }
             }
             steps {
-                sh  'python setup.py bdist_wheel  '
+                sh  'python3 setup.py bdist_wheel  '
             }
             post {
                 always {
@@ -43,7 +43,7 @@ pipeline {
                 label "pytest"
                 }
             steps {
-                sh "twine upload dist/*"
+                sh "python3 -m twine upload dist/*"
             }
         }
     }
