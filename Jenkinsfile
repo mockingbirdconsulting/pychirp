@@ -44,7 +44,7 @@ pipeline {
                 }
             when {
                 expression {
-                    currentBuild.branch != "master"
+                    env.BRANCH_NAME != "master"
                 }
             }
             environment {
