@@ -52,7 +52,7 @@ pipeline {
             }
             steps {
                 sh 'pip3 install -r dev_requirements.txt' 
-                sh 'python3 -m twine -u ${PYPI_TEST_USR} -p ${PYPI_TEST_PSW} --repository-url https://test.pypi.org/legacy/ upload dist/*'
+                sh 'python3 -m twine upload -u ${PYPI_TEST_USR} -p ${PYPI_TEST_PSW} --repository-url https://test.pypi.org/legacy/ dist/*'
             }
         }
     }
