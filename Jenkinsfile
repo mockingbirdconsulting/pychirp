@@ -48,7 +48,7 @@ pipeline {
                 }
             }
             environment {
-                PYPI_TEST = credentials('pypi-test-creds')
+                PYPI_TEST = credentials('01b30226-ad41-4ba7-ae90-728d683c3318')
             }
             steps {
                 sh 'pip3 install -r dev_requirements.txt' 
