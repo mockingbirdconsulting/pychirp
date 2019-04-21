@@ -38,13 +38,21 @@ pipeline {
                 }
             }
         }
-        stage("Deploy to PyPI") {
+        stage("Deploy to PyPI Test Server") {
             agent {
                 label "pytest"
                 }
+            when {
+                expression {
+                    currentBuild.branch != "master"
+                }
+            }
+            environment {
+                PYPI_TEST = credentials('pypi-test-creds')
+            }
             steps {
                 sh 'pip3 install -r dev_requirements.txt' 
-                sh "python3 -m twine upload dist/*"
+                sh "python3 -m twine -u ${PYPI_TEST_USER} -p ${PYPI_TEST_PSW) --repository-url https://test.pypi.org/legacy/ upload dist/*"
             }
         }
     }
