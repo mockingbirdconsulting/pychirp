@@ -8,10 +8,6 @@ Welcome to PyLoRaServer's documentation!
 
 PyLoRaServer is a python library for interacting with the loraserver.io project.
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
 
 Indices and tables
 ==================
