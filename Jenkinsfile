@@ -32,8 +32,9 @@ pipeline {
             post {
                 always {
                     // Archive unit tests for the future
-                    archiveArtifacts (allowEmptyArchive: true,
+                    archiveArtifacts (allowEmptyArchive: false,
                                      artifacts: 'dist/*whl',
+                                     onlyIfSuccessful: true
                                      fingerprint: true)
                 }
             }
@@ -51,7 +52,7 @@ pipeline {
                 PYPI_TEST = credentials('01b30226-ad41-4ba7-ae90-728d683c3318')
             }
             steps {
-                copyArtifacts filter: '*.whl', fingerprintArtifacts: true, projectName: '${JOB_NAME}', selector: specific('${BUILD_NUMBER}'), target: 'dist'
+                copyArtifacts filter: '*.whl', fingerprintArtifacts: true, projectName: '${JOB_NAME}', target: 'dist'
                 sh 'pip3 install -r dev_requirements.txt' 
                 sh 'python3 -m twine upload -u ${PYPI_TEST_USR} -p ${PYPI_TEST_PSW} --repository-url https://test.pypi.org/legacy/ dist/*'
             }
