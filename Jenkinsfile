@@ -58,5 +58,23 @@ pipeline {
                 sh 'python3 -m twine upload -u ${PYPI_TEST_USR} -p ${PYPI_TEST_PSW} --repository-url https://test.pypi.org/legacy/ **/*.whl'
             }
         }
+        stage("Deploy to PyPI Prod Server") {
+            agent {
+                label "pytest"
+                }
+            when {
+                expression {
+                    env.BRANCH_NAME == "master"
+                }
+            }
+            environment {
+                PYPI_TEST = credentials('01b30226-ad41-4ba7-ae90-728d683c3318')
+            }
+            steps {
+                unstash 'pyloraserver-wheel'
+                sh 'pip3 install -r dev_requirements.txt' 
+                sh 'python3 -m twine upload -u ${PYPI_TEST_USR} -p ${PYPI_TEST_PSW} **/*.whl'
+            }
+        }
     }
 }
