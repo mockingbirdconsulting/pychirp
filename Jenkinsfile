@@ -34,7 +34,7 @@ pipeline {
                     // Archive unit tests for the future
                     archiveArtifacts (allowEmptyArchive: false,
                                      artifacts: 'dist/*whl',
-                                     onlyIfSuccessful: true
+                                     onlyIfSuccessful: true,
                                      fingerprint: true)
                 }
             }
