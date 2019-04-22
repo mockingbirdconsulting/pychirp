@@ -28,7 +28,7 @@ pipeline {
             }
             steps {
                 sh  'python3 setup.py bdist_wheel  '
-                stash includes: "dist/**.whl", name: '${JOB_NAME}-${BUILD_NUMBER}-pylorawhl'
+                stash includes: "dist/**.whl", name: 'pyloraserver-wheel'
             }
             post {
                 always {
@@ -53,7 +53,7 @@ pipeline {
                 PYPI_TEST = credentials('01b30226-ad41-4ba7-ae90-728d683c3318')
             }
             steps {
-                unstash '${JOB_NAME}-${BUILD_NUMBER}-pylorawhl'
+                unstash 'pyloraserver-wheel'
                 sh 'pip3 install -r dev_requirements.txt' 
                 sh 'python3 -m twine upload -u ${PYPI_TEST_USR} -p ${PYPI_TEST_PSW} --repository-url https://test.pypi.org/legacy/ *whl'
             }
