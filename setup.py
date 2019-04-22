@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyloraserver",
-    version="0.1.2",
+    version="0.1.3",
     author="Mockingbird Consulting Ltd",
     author_email="info+pyloraserver@mockingbirdconsulting.co.uk",
     description="A python library for interacting with Loraserver.io.",
