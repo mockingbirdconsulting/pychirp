@@ -2,7 +2,8 @@
    :target: https://pyloraserver.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
-# PyLoRaServer
+PyLoRaServer
+============
 
 The LoRaServer.io Python Library
 
