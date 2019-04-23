@@ -1,6 +1,6 @@
 class Application:
-    """ A class to represent Applications within LoRaServer.io 
-    
+    """ A class to represent Applications within LoRaServer.io
+
     Args:
         name (str): The name of the application.
         description (str): A description of the application.
