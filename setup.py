@@ -1,10 +1,12 @@
 import os
 import setuptools
 
+
 # Find the true path of a filename
 def __path(filename):
     return os.path.join(os.path.dirname(__file__),
                         filename)
+
 
 # Set the long description from the README
 with open("README.rst", "r") as fh:
@@ -17,7 +19,7 @@ build = 0
 if os.path.exists(__path('build.info')):
     build = open(__path('build.info')).read().strip()
 
-version= '0.2.{}'.format(build)
+version = '0.2.{}'.format(build)
 
 setuptools.setup(
     name="pychirp",
