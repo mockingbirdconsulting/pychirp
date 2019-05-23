@@ -27,6 +27,7 @@ pipeline {
                 }
             }
             steps {
+                sh 'echo ${BUILD_ID} > build.info'
                 sh  'python3 setup.py bdist_wheel  '
                 stash includes: "dist/**.whl", name: 'pychirp-wheel'
             }
