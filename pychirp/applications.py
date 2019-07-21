@@ -44,3 +44,19 @@ class Application:
 
         ret_list = self.cscx.connection.get(url)
         return ret_list.json()
+
+    def create(self,
+               name = None,
+               orgId = None,
+               service_profile = None):
+        """
+        Create a new application
+
+        Args:
+            name (str): The name of the new application
+            orgid (int): The ID of the organisation that owns the application
+            service_profile (str): The Service Profile ID
+        Returns:
+            dict: A dict of the creation attempt result
+        """
+        return {}
