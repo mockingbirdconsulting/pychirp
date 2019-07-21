@@ -36,10 +36,26 @@ class TestApplication:
                 chirpstack_pass="test_pass"
                 )
 
-    def test_device_profile_list(self,
-                                 lora_connection
-                                 ):
+    def test_application_list(self,
+                              lora_connection
+                              ):
         a = applications.Application(
                 chirpstack_connection=lora_connection)
         alist = a.list()
         assert alist['result'][0]['name'] == "TEST_APPLICATION"
+
+    def test_application_create(self,
+                                lora_connection):
+        a = applications.Application(
+                loraserver_connection=lora_connection)
+        create_res = a.create(name = "Created App",
+                 orgId = 1,
+                 service_profile = "54767cb5-beef-494e-dead-8821ddd69bcb"
+                 )
+        assert create_res['result_code'] == 0
+        newlist = a.list()
+        assert alist['result'][1]['name'] == "Created App"
+
+
+       
+
