@@ -6,14 +6,28 @@ class TestApplication:
     @pytest.fixture
     def lora_connection(self, requests_mock):
         # Mock the Authentication Handler
+        requests_mock.post(
+                "https://loraserver/api/applications",
+                json={
+                    "id": "2"
+                    }
+                )
         requests_mock.get(
                 "https://chirpstack/api/applications",
                 json={
                   "result": [
                         {
-                            "description": "A test application from the test fixture",  # noqa: E501
+                          "description": "A test application from the test fixture",  # noqa: E501
                           "id": "1",
                           "name": "TEST_APPLICATION",
+                          "organizationID": "1",
+                          "serviceProfileID": "54767cb5-beef-494e-dead-8821ddd69bcb",  # noqa: E501
+                          "serviceProfileName": "testServiceProfile"
+                        },
+                        {
+                          "description": "A new test application from the test fixture",  # noqa: E501
+                          "id": "2",
+                          "name": "Created App",
                           "organizationID": "1",
                           "serviceProfileID": "54767cb5-beef-494e-dead-8821ddd69bcb",  # noqa: E501
                           "serviceProfileName": "testServiceProfile"
@@ -54,8 +68,4 @@ class TestApplication:
                  )
         assert create_res['result_code'] == 0
         newlist = a.list()
-        assert alist['result'][1]['name'] == "Created App"
-
-
-       
-
+        assert newlist['result'][1]['name'] == "Created App"
