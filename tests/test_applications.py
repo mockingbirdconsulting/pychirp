@@ -62,9 +62,9 @@ class TestApplication:
                                 lora_connection):
         a = applications.Application(
                 loraserver_connection=lora_connection)
-        create_res = a.create(name = "Created App",
-                 orgId = 1,
-                 service_profile = "54767cb5-beef-494e-dead-8821ddd69bcb"
+        create_res = a.create(name="Created App",
+                              orgId=1,
+                              service_profile="54767cb5-beef-494e-dead-8821ddd69bcb"  # noqa: E501
                  )
         assert create_res['result_code'] == 0
         newlist = a.list()
