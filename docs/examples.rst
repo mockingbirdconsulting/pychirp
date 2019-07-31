@@ -19,7 +19,43 @@ You can list all devices with the following code::
     d = device.Devices(loraserver_connection=cx)
     
     # Get all the devices
-    d.list_all(appid=7).content
+    devices = d.list_all(appid=7)
+    print("We found %s devices" % devices['totalCount'])
+    for dev in devices['result']:
+        for key, val in dev.items():
+            print("%s => %s" % (key, val))
+        print("==========")
+
+This will return the following output (the device ID's etc will be different for your server::
+
+    We found 2 devices
+    devEUI => bebebebebebebebe
+    name => asdf
+    applicationID => 7
+    description => asdf
+    deviceProfileID => 54767cb5-ba1b-494e-beef-8821ddd69bcb
+    deviceProfileName => ODN_EU_02
+    deviceStatusBattery => 255
+    deviceStatusMargin => 256
+    deviceStatusExternalPowerSource => False
+    deviceStatusBatteryLevelUnavailable => True
+    deviceStatusBatteryLevel => 0
+    lastSeenAt => 2019-04-17T06:12:31.904650Z
+    ==========
+    devEUI => deadbeefdeadbeef
+    name => pyloraserver_test
+    applicationID => 7
+    description => Testing from the new library
+    deviceProfileID => 54767cb5-ba1b-494e-beef-8821ddd69bcb
+    deviceProfileName => ODN_EU_02
+    deviceStatusBattery => 255
+    deviceStatusMargin => 256
+    deviceStatusExternalPowerSource => False
+    deviceStatusBatteryLevelUnavailable => True
+    deviceStatusBatteryLevel => 0
+    lastSeenAt => None
+    ==========
+
 
 Create a device
 ---------------

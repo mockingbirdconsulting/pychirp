@@ -204,4 +204,5 @@ class Devices:
             limit,
             appid
             )
-        return self.lscx.connection.get(device_list_query)
+        devices = self.lscx.connection.get(device_list_query).json()
+        return devices
