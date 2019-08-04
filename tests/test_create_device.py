@@ -13,7 +13,7 @@ class TestDeviceCreation:
                 )
         # Mock the device list
         requests_mock.get(
-                "https://loraserver/api/devices?limit=10&applicationID=1",
+                "https://loraserver/api/devices?limit=100&applicationID=1",
                 json={
                       "totalCount": "1",
                       "result": [
@@ -54,6 +54,16 @@ class TestDeviceCreation:
                 )
         from pyloraserver import device
         return device.Devices(loraserver_connection=lora_connection)
+
+    def test_device_list_is_a_dict(
+            self,
+            lora_connection,
+            requests_mock
+            ):
+        from pyloraserver import device
+        d = device.Devices(loraserver_connection=lora_connection)
+        devices = d.list_all(appid=1)
+        assert type(devices) is dict
 
     def test_device_registers_correctly(
             self,
