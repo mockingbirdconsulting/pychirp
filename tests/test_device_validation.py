@@ -1,13 +1,13 @@
 # Validate that a device corrects any data errors
 import pytest
-from pyloraserver import device
+from pychirp import device
 
 
 class TestDevicesValidation(object):
 
     @pytest.fixture
     def lora_correct_device(self):
-        from pyloraserver import device
+        from pychirp import device
         return device.Devices(
                 deveui='deadbeefdeadbeef',
                 nwkkey='deadbeefdeadbeefdeadbeefdeadbeef',

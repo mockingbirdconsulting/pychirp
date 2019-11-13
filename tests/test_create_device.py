@@ -6,14 +6,14 @@ class TestDeviceCreation:
     def lora_connection(self, requests_mock):
         # Mock the Authentication Handler
         requests_mock.post(
-                "https://loraserver/api/internal/login",
+                "https://chirpstack/api/internal/login",
                 json={
                     "jwt": "eyJhbGciOiZXJ2ZXIiLCJleHAiOjE1NTU1OTk1ODMsImlzcyI6ImxvcmEtYXBwLXNlcnZlciIsIm5iZiI6MTU1NTUxMzE4Mywic3ViIjoidXNlciIsInVzZXJuYW1lIjoiYXBpYWNjb3VudCJ9.MBkIe1pxh51lB4-qRkjxlMaOa2HBnMhwk148wYrBDj0JIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJsb3JhLWFwcC1z"  # noqa: E501
 }
                 )
         # Mock the device list
         requests_mock.get(
-                "https://loraserver/api/devices?limit=100&applicationID=1",
+                "https://chirpstack/api/devices?limit=100&applicationID=1",
                 json={
                       "totalCount": "1",
                       "result": [
@@ -34,34 +34,34 @@ class TestDeviceCreation:
                       ]
                     }
                 )
-        from pyloraserver import loraserver
-        return loraserver.Loraserver(
-                loraserver_url="https://loraserver",
-                loraserver_user="test_user",
-                loraserver_pass="test_pass"
+        from pychirp import chirpstack
+        return chirpstack.Chirpstack(
+                chirpstack_url="https://chirpstack",
+                chirpstack_user="test_user",
+                chirpstack_pass="test_pass"
                 )
 
     @pytest.fixture
     def lora_device(self, lora_connection, requests_mock):
         # Mock the device creation response
         requests_mock.post(
-                "https://loraserver/api/devices",
+                "https://chirpstack/api/devices",
                 json={}
                 )
         requests_mock.post(
-                "https://loraserver/api/devices/deadbeefdeadbeef/keys",
+                "https://chirpstack/api/devices/deadbeefdeadbeef/keys",
                 json={}
                 )
-        from pyloraserver import device
-        return device.Devices(loraserver_connection=lora_connection)
+        from pychirp import device
+        return device.Devices(chirpstack_connection=lora_connection)
 
     def test_device_list_is_a_dict(
             self,
             lora_connection,
             requests_mock
             ):
-        from pyloraserver import device
-        d = device.Devices(loraserver_connection=lora_connection)
+        from pychirp import device
+        d = device.Devices(chirpstack_connection=lora_connection)
         devices = d.list_all(appid=1)
         assert type(devices) is dict
 

@@ -1,16 +1,16 @@
-.. image:: https://readthedocs.org/projects/pyloraserver/badge/?version=latest
-   :target: https://pyloraserver.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/pychirp/badge/?version=latest
+   :target: https://pychirp.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
-PyLoRaServer
-============
+PyChirp
+=======
 
-The LoRaServer.io Python Library
+The Chirpstack.io Python Library
 
-This python library makes interaction with the loraserver.io project that bit easier.
+This python library makes interaction with the chirpstack.io project that bit easier.
 
 For full documentation, including examples, please see our pages on `Read The Docs`__
 
 
-.. _RTD: https://pyloraserver.readthedocs.io/en/latest/
+.. _RTD: https://pychirp.readthedocs.io/en/latest/
 __ RTD_

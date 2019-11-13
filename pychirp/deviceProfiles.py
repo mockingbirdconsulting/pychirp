@@ -1,12 +1,12 @@
 class DeviceProfiles:
     """
-    A class representing Device Profiles within LoRaServer.io
+    A class representing Device Profiles within Chirpstack.io
 
     Args:
         name (str): The name of the device profile.
         description (str): A description of the device profile.
-        loraserver_connection (loraserver_connection):
-            A loraserver_connection object
+        chirpstack_connection (chirpstack_connection):
+            A chirpstack_connection object
     Returns:
         DeviceProfiles: A device profile object
     """
@@ -14,9 +14,9 @@ class DeviceProfiles:
     def __init__(self,
                  name=None,
                  description=None,
-                 loraserver_connection=None
+                 chirpstack_connection=None
                  ):
-        self.lscx = loraserver_connection
+        self.cscx = chirpstack_connection
 
     def list(self,
              limit=10,
@@ -36,7 +36,7 @@ class DeviceProfiles:
             dict: A dict of the search results
         """
         url = "%s/api/device-profiles?limit=%s&offset=%s" % (
-                self.lscx.loraserver_url,
+                self.cscx.chirpstack_url,
                 limit,
                 offset)
         if appid is not None:
@@ -44,5 +44,5 @@ class DeviceProfiles:
         if orgid is not None:
             url = "%s&organizationID=%s" % (url, orgid)
 
-        ret_list = self.lscx.connection.get(url)
+        ret_list = self.cscx.connection.get(url)
         return ret_list.json()

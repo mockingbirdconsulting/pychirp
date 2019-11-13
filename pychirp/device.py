@@ -1,4 +1,4 @@
-# Interacting with the LoraServer API to manage devices
+# Interacting with the Chirpstack API to manage devices
 import uuid
 import binascii
 import json
@@ -6,7 +6,7 @@ import json
 
 class Devices:
     """
-    A class to manipulate devices within the LoRaServer.io
+    A class to manipulate devices within the Chirpstack.io
     installation.
 
     Args:
@@ -22,14 +22,14 @@ class Devices:
             or created by the calling software
         appkey (str): The application key for the device. This is
             not required for LoRaWAN 1.0.x devices, and is set to
-            the loraserver.io default of '00000000000000000000000000000000'
+            the chirpstack.io default of '00000000000000000000000000000000'
         nwkkey (str): The Network Key provided either by the
             device manufacturer, the calling software, or (if left blank)
             automatically generated upon device creation
-        loraserver_connection (loraserver_connection):
-            A loraserver_connection object
+        chirpstack_connection (chirpstack_connection):
+            A chirpstack_connection object
     Returns:
-        Device: A loraserver device object
+        Device: A chirpstack device object
     """
     def __init__(self,
                  name=None,
@@ -41,7 +41,7 @@ class Devices:
                  deveui=None,
                  appkey=None,
                  nwkkey=None,
-                 loraserver_connection=None
+                 chirpstack_connection=None
                  ):
         self.name = name
         self.description = description
@@ -52,7 +52,7 @@ class Devices:
         self.deveui = deveui
         self.appKey = '00000000000000000000000000000000'
         self.nwkKey = nwkkey
-        self.lscx = loraserver_connection
+        self.cscx = chirpstack_connection
         self.validate()
 
     def validate(self):
@@ -91,7 +91,7 @@ class Devices:
 
     def create_and_activate(self):
         """
-        Create and activate the device on the LoRaServer.io
+        Create and activate the device on the Chirpstack.io
         installation
 
         Args:
@@ -137,8 +137,8 @@ class Devices:
         device['devEUI'] = self.deveui
         payload = {}
         payload['device'] = device
-        create_device = self.lscx.connection.post(
-            self.lscx.loraserver_url+"/api/devices",
+        create_device = self.cscx.connection.post(
+            self.cscx.chirpstack_url+"/api/devices",
             json=payload
             )
 
@@ -153,8 +153,8 @@ class Devices:
                   }
                 }
 
-            set_keys = self.lscx.connection.post(
-                self.lscx.loraserver_url+"/api/devices/"+self.deveui+"/keys",
+            set_keys = self.cscx.connection.post(
+                self.cscx.chirpstack_url+"/api/devices/"+self.deveui+"/keys",
                 json=keys_payload
                 )
 
@@ -173,8 +173,8 @@ class Devices:
                 return_dict['message'] = "Error: %s" % json.loads(
                         set_keys.content
                         )['message']
-                self.lscx.connection.delete(
-                    self.lscx.loraserver_url+"/api/devices/"+self.deveui,
+                self.cscx.connection.delete(
+                    self.cscx.chirpstack_url+"/api/devices/"+self.deveui,
                 )
         else:
             return_dict['result'] = "failure"
@@ -200,9 +200,9 @@ class Devices:
             dict: A dictionary containing all of the search results
         """
         device_list_query = "%s/api/devices?limit=%s&applicationID=%s" % (
-            self.lscx.loraserver_url,
+            self.cscx.chirpstack_url,
             limit,
             appid
             )
-        devices = self.lscx.connection.get(device_list_query).json()
+        devices = self.cscx.connection.get(device_list_query).json()
         return devices
