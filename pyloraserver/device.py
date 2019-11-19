@@ -18,7 +18,7 @@ class Devices:
             altitude of this device?
         skipFCntCheck (bool): Should we skip frame counter checking
             on this device?
-        devuid (str): The Device EUI provided by the manufacturer
+        deveui (str): The Device EUI provided by the manufacturer
             or created by the calling software
         appkey (str): The application key for the device. This is
             not required for LoRaWAN 1.0.x devices, and is set to
