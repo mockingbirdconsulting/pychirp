@@ -183,6 +183,67 @@ class Devices:
                     )['message']
         return return_dict
 
+    def update(self):
+        """
+        Update the device on the LoRaServer.io
+        installation
+
+        Args:
+            self (object): The device object
+        Returns:
+            dict: A dict containing the result (success/failure) and
+                any messages passed on by the API
+        """
+        return_dict = {'result': 'success'}
+        # Verify that we have all the information that we need
+        if self.deveui is None:
+            return_dict['result'] = 'failure'
+            return_dict['message'] = "DevEUI was not provided"
+
+        if self.appid is None:
+            return_dict['result'] = 'failure'
+            return_dict['message'] = "Application ID was not provided"
+
+        if self.profile_id is None:
+            return_dict['result'] = 'failure'
+            return_dict['message'] = "Profile ID was not provided"
+
+        if self.name is None:
+            return_dict['result'] = 'failure'
+            return_dict['message'] = "Device Name was not provided"
+
+        if self.description is None:
+            return_dict['result'] = 'failure'
+            return_dict['message'] = "Device description was not provided"
+
+        if return_dict['result'] == 'failure':
+            return return_dict
+
+        # Setup the payload
+        device = {}
+        device['application_id'] = self.appid
+        device['device_profile_id'] = self.profile_id
+        device['referenceAltitude'] = self.referenceAltitude
+        device['skipFCntCheck'] = self.skipFCntCheck
+
+        device['name'] = self.name
+        device['description'] = self.description
+        device['devEUI'] = self.deveui
+        payload = {}
+        payload['device'] = device
+        create_device = self.lscx.connection.put(
+            self.lscx.loraserver_url+"/api/devices/"+self.deveui,
+            json=payload
+            )
+
+        if create_device.status_code != 200:
+            return_dict['result'] = "failure"
+            return_dict['message'] = json.loads(
+                    create_device.content
+                    )['message']
+
+        return return_dict
+
     def list_all(self,
                  appid=None,
                  limit=100
