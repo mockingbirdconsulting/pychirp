@@ -1,7 +1,7 @@
-Welcome to PyLoRaServer's documentation!
+Welcome to Pychirp's documentation!
 ========================================
 
-PyLoRaServer is a python library for interacting with the loraserver.io project.
+Pychirp is a python library for interacting with the chirpstack.io project.
 
 Contents
 ========

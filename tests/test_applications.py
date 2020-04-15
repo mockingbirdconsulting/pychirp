@@ -1,5 +1,5 @@
 import pytest
-from pyloraserver import applications
+from pychirp import applications
 
 
 class TestApplication:
@@ -7,7 +7,7 @@ class TestApplication:
     def lora_connection(self, requests_mock):
         # Mock the Authentication Handler
         requests_mock.get(
-                "https://loraserver/api/applications",
+                "https://chirpstack/api/applications",
                 json={
                   "result": [
                         {
@@ -24,22 +24,22 @@ class TestApplication:
                 )
 
         requests_mock.post(
-                "https://loraserver/api/internal/login",
+                "https://chirpstack/api/internal/login",
                 json={
                     "jwt": "eyJhbGciOiZXJ2ZXIiLCJleHAiOjE1NTU1OTk1ODMsImlzcyI6ImxvcmEtYXBwLXNlcnZlciIsIm5iZiI6MTU1NTUxMzE4Mywic3ViIjoidXNlciIsInVzZXJuYW1lIjoiYXBpYWNjb3VudCJ9.MBkIe1pxh51lB4-qRkjxlMaOa2HBnMhwk148wYrBDj0JIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJsb3JhLWFwcC1z"  # noqa: E501
 }
                 )
-        from pyloraserver import loraserver
-        return loraserver.Loraserver(
-                loraserver_url="https://loraserver",
-                loraserver_user="test_user",
-                loraserver_pass="test_pass"
+        from pychirp import chirpstack
+        return chirpstack.Chirpstack(
+                chirpstack_url="https://chirpstack",
+                chirpstack_user="test_user",
+                chirpstack_pass="test_pass"
                 )
 
     def test_device_profile_list(self,
                                  lora_connection
                                  ):
         a = applications.Application(
-                loraserver_connection=lora_connection)
+                chirpstack_connection=lora_connection)
         alist = a.list()
         assert alist['result'][0]['name'] == "TEST_APPLICATION"

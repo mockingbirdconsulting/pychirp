@@ -1,21 +1,21 @@
 class Application:
-    """ A class to represent Applications within LoRaServer.io
+    """ A class to represent Applications within Chirpstack.io
 
     Args:
         name (str): The name of the application.
         description (str): A description of the application.
-        loraserver_connection (loraserver_connection):
-            A loraserver_connection object
+        chirpstack_connection (chirpstack_connection):
+            A chirpstack_connection object
     Returns:
-        Loraserver: A loraserver_connection object
+        Chirpstack: A chirpstack_connection object
     """
 
     def __init__(self,
                  name=None,
                  description=None,
-                 loraserver_connection=None
+                 chirpstack_connection=None
                  ):
-        self.lscx = loraserver_connection
+        self.cscx = chirpstack_connection
 
     def list(self,
              limit=10,
@@ -34,7 +34,7 @@ class Application:
             dict: A dict of the search results
         """
         url = "%s/api/applications?limit=%s&offset=%s" % (
-                self.lscx.loraserver_url,
+                self.cscx.chirpstack_url,
                 limit,
                 offset)
         if search_term is not None:
@@ -42,5 +42,5 @@ class Application:
         if orgid is not None:
             url = "%s&organizationID=%s" % (url, orgid)
 
-        ret_list = self.lscx.connection.get(url)
+        ret_list = self.cscx.connection.get(url)
         return ret_list.json()

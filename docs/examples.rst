@@ -6,17 +6,17 @@ List all Devices
 
 You can list all devices with the following code::
 
-    from pyloraserver import loraserver, device
+    from pychirp import chirpstack, device
     
     # Setup the connection
-    cx = loraserver.Loraserver(
-            loraserver_url="https://my.lora.server",
-            loraserver_user="my_api_username",
-            loraserver_pass="my_api_password"
+    cx = chirpstack.Chirpstack(
+            chirpstack_url="https://my.lora.server",
+            chirpstack_user="my_api_username",
+            chirpstack_pass="my_api_password"
             )
     
     # Connect to the device class
-    d = device.Devices(loraserver_connection=cx)
+    d = device.Devices(chirpstack_connection=cx)
     
     # Get all the devices
     devices = d.list_all(appid=7)
@@ -43,7 +43,7 @@ This will return the following output (the device ID's etc will be different for
     lastSeenAt => 2019-04-17T06:12:31.904650Z
     ==========
     devEUI => deadbeefdeadbeef
-    name => pyloraserver_test
+    name => pychirp_test
     applicationID => 7
     description => Testing from the new library
     deviceProfileID => 54767cb5-ba1b-494e-beef-8821ddd69bcb
@@ -62,14 +62,14 @@ Create a device
 
 Creating a device is also straight-forward::
 
-    from pyloraserver import loraserver, device
+    from pychirp import chirpstack, device
     # Setup the connection
-    cx = loraserver.Loraserver(
-            loraserver_url="https://my.lora.server",
-            loraserver_user="my_api_username",
-            loraserver_pass="my_api_password"
+    cx = chirpstack.Chirpstack(
+            chirpstack_url="https://my.lora.server",
+            chirpstack_user="my_api_username",
+            chirpstack_pass="my_api_password"
             )
-    d = device.Devices(loraserver_connection=cx)
+    d = device.Devices(chirpstack_connection=cx)
     d.description = "This is my device"
     d.deveui = "deadbeefdeadbeef"
     d.name = "My-device-name"

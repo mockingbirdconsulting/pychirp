@@ -18,7 +18,7 @@ sys.path.insert(1, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'PyLoRaServer'
+project = 'Pychirp'
 copyright = '2019, Mockingbird Consulting Ltd'
 author = 'Mockingbird Consulting Ltd'
 
