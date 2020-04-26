@@ -63,7 +63,7 @@ class Application:
             dict: A dict of the creation attempt result
         """
         url = "%s/api/applications" % (
-                self.lscx.loraserver_url,
+                self.cscx.chirpstack_url,
                 )
         if name is None:
             return {'result_code': 1, 'result_text': 'A name must be supplied'}
@@ -82,7 +82,7 @@ class Application:
         payload['name'] = name
         payload['organizationID'] = orgId
         payload['serviceProfileID'] = service_profile
-        resp = self.lscx.connection.post(url, json=payload)
+        resp = self.cscx.connection.post(url, json=payload)
         resp_json = json.loads(resp.text)
         if "id" in resp_json:
             return {'result_code': 0,

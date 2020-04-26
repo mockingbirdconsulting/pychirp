@@ -4,10 +4,10 @@ from pychirp import applications
 
 class TestApplication:
     @pytest.fixture
-    def lora_connection(self, requests_mock):
+    def chirpstack_connection(self, requests_mock):
         # Mock the Authentication Handler
         requests_mock.post(
-                "https://loraserver/api/applications",
+                "https://chirpstack/api/applications",
                 json={
                     "id": "2"
                     }
@@ -51,17 +51,17 @@ class TestApplication:
                 )
 
     def test_application_list(self,
-                              lora_connection
+                              chirpstack_connection
                               ):
         a = applications.Application(
-                chirpstack_connection=lora_connection)
+                chirpstack_connection=chirpstack_connection)
         alist = a.list()
         assert alist['result'][0]['name'] == "TEST_APPLICATION"
 
     def test_application_create(self,
-                                lora_connection):
+                                chirpstack_connection):
         a = applications.Application(
-                loraserver_connection=lora_connection)
+                chirpstack_connection=chirpstack_connection)
         create_res = a.create(name="Created App",
                               orgId=1,
                               service_profile="54767cb5-beef-494e-dead-8821ddd69bcb"  # noqa: E501
