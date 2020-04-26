@@ -4,16 +4,30 @@ from pychirp import applications
 
 class TestApplication:
     @pytest.fixture
-    def lora_connection(self, requests_mock):
+    def chirpstack_connection(self, requests_mock):
         # Mock the Authentication Handler
+        requests_mock.post(
+                "https://chirpstack/api/applications",
+                json={
+                    "id": "2"
+                    }
+                )
         requests_mock.get(
                 "https://chirpstack/api/applications",
                 json={
                   "result": [
                         {
-                            "description": "A test application from the test fixture",  # noqa: E501
+                          "description": "A test application from the test fixture",  # noqa: E501
                           "id": "1",
                           "name": "TEST_APPLICATION",
+                          "organizationID": "1",
+                          "serviceProfileID": "54767cb5-beef-494e-dead-8821ddd69bcb",  # noqa: E501
+                          "serviceProfileName": "testServiceProfile"
+                        },
+                        {
+                          "description": "A new test application from the test fixture",  # noqa: E501
+                          "id": "2",
+                          "name": "Created App",
                           "organizationID": "1",
                           "serviceProfileID": "54767cb5-beef-494e-dead-8821ddd69bcb",  # noqa: E501
                           "serviceProfileName": "testServiceProfile"
@@ -36,10 +50,22 @@ class TestApplication:
                 chirpstack_pass="test_pass"
                 )
 
-    def test_device_profile_list(self,
-                                 lora_connection
-                                 ):
+    def test_application_list(self,
+                              chirpstack_connection
+                              ):
         a = applications.Application(
-                chirpstack_connection=lora_connection)
+                chirpstack_connection=chirpstack_connection)
         alist = a.list()
         assert alist['result'][0]['name'] == "TEST_APPLICATION"
+
+    def test_application_create(self,
+                                chirpstack_connection):
+        a = applications.Application(
+                chirpstack_connection=chirpstack_connection)
+        create_res = a.create(name="Created App",
+                              orgId=1,
+                              service_profile="54767cb5-beef-494e-dead-8821ddd69bcb"  # noqa: E501
+                 )
+        assert create_res['result_code'] == 0
+        newlist = a.list()
+        assert newlist['result'][1]['name'] == "Created App"

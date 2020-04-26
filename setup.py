@@ -1,11 +1,29 @@
+import os
 import setuptools
 
+
+# Find the true path of a filename
+def __path(filename):
+    return os.path.join(os.path.dirname(__file__),
+                        filename)
+
+
+# Set the long description from the README
 with open("README.rst", "r") as fh:
     long_description = fh.read()
 
+# Set the build to 0
+build = 0
+
+# Automatically update minor releases based on the Jenkins build ID
+if os.path.exists(__path('build.info')):
+    build = open(__path('build.info')).read().strip()
+
+version = '0.2.{}'.format(build)
+
 setuptools.setup(
     name="pychirp",
-    version="0.2.0",
+    version=version,
     author="Mockingbird Consulting Ltd",
     author_email="info+pychirp@mockingbirdconsulting.co.uk",
     description="A python library for interacting with chirpstack.io.",
